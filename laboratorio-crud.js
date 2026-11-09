@@ -472,9 +472,16 @@ const ejecutarCicloCrud = async () => {
         console.log('\n--- 2. Fase Read: Consulta con operadores')
 
         const urgenteOComplejos = await Ticket.find({
-            $or: [{prioridad: 'Critica'}, {horasInvertidas: {$gt: 4}}],
+            $or: [{prioridad: 'Critica'}, {horasInvertidas: {$gt: 4}}]
         }).select('codigo titulo prioridad horasInvertidas -_id')
-        console.log('A) Criticos o con > 4 horas ($or):', urgenteOComplejos)
+        console.log('\nA) Criticos o con > 4 horas:', urgenteOComplejos)
+        console.log('Total de resultados A:', urgenteOComplejos.length)
+
+        const bajaOConPocasHoras = await Ticket.find({
+            $or: [{prioridad: 'Baja'}, {horasInvertidas: {$lte: 2}}]
+        }).select('codigo titulo prioridad horasInvertidas -_id')
+        console.log('\nB) Baja o con <= 2 horas:', bajaOConPocasHoras)
+        console.log('Total de resultados B:', bajaOConPocasHoras.length)
 
     } catch (error) {
 
