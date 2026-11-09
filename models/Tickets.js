@@ -1,4 +1,4 @@
-import { Mongoose } from "mongoose";
+import mongoose, { Mongoose } from "mongoose";
 
 const ticketSchema = new mongoose.Schema(
     {
@@ -52,3 +52,8 @@ const ticketSchema = new mongoose.Schema(
         timestamps: true
     }
 )
+
+// En servidores que recargan modulos reutiliza el modelo ya registrado para evitar el error de intentar compilarlos 2 veces
+const Ticket = mongoose.models.Ticket || mongoose.model('Ticket', ticketSchema)
+
+export default Ticket
