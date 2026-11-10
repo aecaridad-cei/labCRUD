@@ -483,6 +483,35 @@ const ejecutarCicloCrud = async () => {
         console.log('\nB) Baja o con <= 2 horas:', bajaOConPocasHoras)
         console.log('Total de resultados B:', bajaOConPocasHoras.length)
 
+        const ticketsImportantes = await Ticket.find({
+            prioridad: { $in: ['Alta', 'Media'] },
+    }).select('codigo titulo estado prioridad -_id');
+    console.log('\nC) Tickets importantes:', ticketsImportantes);
+    console.log("Total de resultados C:", ticketsImportantes.length);
+
+        const ticketActualizado = await Ticket.findOneAndUpdate(
+            { codigo: 'TCK-050' },
+            {
+                $set: { estado: 'Resuelto' },
+                $inc: { horasInvertidas: 1.5 },
+                $push: { etiquetas: 'ui' }
+            },
+            { new: true, runValidators: true }
+        )
+
+        console.log('\nTCK-050 actualizado:', {
+            estado: ticketActualizado.estado,
+            horas: ticketActualizado.horasInvertidas,
+            etiquetas: ticketActualizado.etiquetas
+        })
+
+        const resultadoMasivo = await Ticket.updateMany(
+            { agenteAsignado: {$exists: false} },
+            { $set: { agenteAsignado: 'Angel'} }
+        )
+
+        console.log(`\n Actualizacion masiva completada: ${resultadoMasivo.modifiedCount} tickets asignado a Angel`)
+
     } catch (error) {
 
         console.error('\nError en el Lab:', error.message)
