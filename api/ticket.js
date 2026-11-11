@@ -4,7 +4,7 @@ import Ticket from '../models/Tickets.js'
 export default async function handler (req, res) {
     try {
         
-        if(mongoose.connect.readyState === 0){
+        if (mongoose.connection.readyState === 0){
             await mongoose.connect(process.env.MONGODB_URI)
         }
         
