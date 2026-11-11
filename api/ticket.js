@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Ticket from '.. /models/Tickets.js'
+import Ticket from '../models/Tickets.js'
 
 export default async function handler (req, res) {
     try {
