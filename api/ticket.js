@@ -24,18 +24,21 @@ export default async function handler (req, res) {
             }
 
             const tickets = await Ticket.find(filtro).sort({createdAt: -1})
-            return res.status(200).json({total: tickets.length, datos: tickets})
+            return res.status(200).json({
+                total: tickets.length, 
+                datos: tickets})
 
         }
 
         return res.status(405).json({error: `Method ${method} no permitido`})
 
     } catch (error) {
+        console.error("Error en API de tickets:", error);
+
         return res.status(500).json({
             error: "Error al consultar la base de datos",
-            detalle: error.message,
-        })
-
+            detalle: error.message
+        });
     }
 }
 //
