@@ -523,3 +523,4 @@ const ejecutarCicloCrud = async () => {
 }
 
 ejecutarCicloCrud()
+console.log('Hola mundo')
